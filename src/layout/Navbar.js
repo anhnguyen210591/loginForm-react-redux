@@ -3,22 +3,14 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import SignInLinks from './SignInLinks'
 import SignOutLinks from './SignOutLinks'
-import {NavLink} from 'react-router-dom'
-import {logout} from '../actions'
+
 
 
 class Navbar extends React.Component {
     constructor(props){
     super(props);
-    this.state={
-        isLoggedIn: false
-    };
     }
-    componentWillReceiveProps(next) {
-        this.setState({
-            isLoggedIn: next.isLoginSuccess
-        })
-    }
+  
 
     render() {
         return (
@@ -27,7 +19,7 @@ class Navbar extends React.Component {
                     <div className='container'>
                         <Link to='/' className='brand-logo'>Practise </Link>
                         {
-                            this.state.isLoggedIn ?  <SignInLinks/> :  <SignOutLinks/>
+                            this.props.isLoginSuccess ?  <SignInLinks/> :  <SignOutLinks/>
                         }
                     </div>
                 </nav>
@@ -38,6 +30,7 @@ class Navbar extends React.Component {
 
 
 const mapStateToProps = (state) =>{
+    console.log("state after login",state.login.isLoginSuccess)
     return{
         isLoginPending : state.login.isLoginPending,
         isLoginSuccess : state.login.isLoginSuccess,
